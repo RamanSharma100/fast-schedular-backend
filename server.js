@@ -1,7 +1,10 @@
+const dotEnv = require("dotenv");
+// configure environment variables
+dotEnv.config();
+
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const dotEnv = require("dotenv");
 const helmet = require("helmet");
 
 const connectDB = require("./config/dbConnect");
@@ -9,9 +12,6 @@ const connectDB = require("./config/dbConnect");
 const APIs = require("./APIs");
 
 const app = express();
-
-// configure environment variables
-dotEnv.config();
 
 // configure middlewares
 app.use(helmet());
