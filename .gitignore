@@ -1,3 +1,6 @@
 node_modules
 
 .env
+googleAPI/credentials.json
+googleAPI/token.json
+googleAPI/credentials2.json
