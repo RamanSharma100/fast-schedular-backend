@@ -1,0 +1,10 @@
+version: 3
+services:
+  web-api:
+    context:
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - "80:8000"
+    volumes:
+      - .:/app
