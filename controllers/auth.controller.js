@@ -42,13 +42,15 @@ const login = (req, res) => {
           success: true,
           token,
           user: { _id: user._id, email: user.email, name: user.name },
+          msg: "Logged in successfully!",
         });
       });
     })
     .catch((err) => {
-      console.log(err);
+      return res.status(500).json({ success: false, msg: err.message });
     });
 };
+
 const register = async (req, res) => {
   const { email, password, name } = req.body;
 
@@ -79,26 +81,16 @@ const register = async (req, res) => {
   });
 
   user.save().then((user) => {
-    try {
-      const token = jsonwebtoken.sign(
-        { _id: user._id, email: user.email, name: user.name },
-        process.env.TOKEN_SECRET,
-        {
-          expiresIn: "1h",
-        }
-      );
-      const tokenMail = jsonwebtoken.sign(
-        { _id: user._id, email: user.email, name: user.name },
-        process.env.TOKEN_SECRET,
-        {
-          expiresIn: "1d",
-        }
-      );
+    // send email for verification
 
-      // send email for verification
+    const tokenMail = jsonwebtoken.sign(
+      { _id: user._id, email: user.email, name: user.name },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "1h" }
+    );
 
-      const url = `${process.env.CLIENT_URL}/verify/${tokenMail}`;
-      const message = `
+    const url = `${process.env.CLIENT_URL}/verify/${tokenMail}`;
+    const message = `
         <h1>Verify your email address</h1>
         <p>Please click the button below to verify your email address</p>
         <a href=${url} clicktracking=off>${url}</a>
@@ -107,29 +99,20 @@ const register = async (req, res) => {
         <p>If you did not create an account, please ignore this email</p>
 
         `;
-      try {
-        mailHelper({
-          email: user.email,
-
-          subject: "Verify your email address",
-          message,
-        })
-          .then(() => {
-            return res.status(201).json({
-              success: true,
-              token,
-              user: { _id: user._id, email: user.email, name: user.name },
-            });
-          })
-          .catch((err) => {
-            return res.status(400).json({ success: false, msg: err.message });
-          });
-      } catch (err) {
-        return res.status(500).json({ success: false, msg: err.message });
-      }
-    } catch (err) {
-      return res.status(500).json({ success: false, msg: err.message });
-    }
+    mailHelper({
+      email: user.email,
+      subject: "Verify your email address",
+      message,
+    })
+      .then(() => {
+        return res.status(201).json({
+          success: true,
+          msg: "you are registered successfully! please login to continue",
+        });
+      })
+      .catch((err) => {
+        return res.status(400).json({ success: false, msg: err.message });
+      });
   });
 };
 

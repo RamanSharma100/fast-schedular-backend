@@ -6,6 +6,7 @@ const {
   deleteEvent,
   updateEvent,
   getEvent,
+  getEvents,
 } = require("../controllers/eventCreation.controller");
 
 const checkAuth = require("../middlewares/checkAuth");
@@ -16,6 +17,7 @@ module.exports = router;
 router.post("/create", checkAuth, createEvent);
 router.post("/update", checkAuth, updateEvent);
 router.post("/delete", checkAuth, deleteEvent);
-router.get("/get", checkAuth, getEvent);
+router.get("/get/:id", getEvent);
+router.get("/get/:userId/all", checkAuth, getEvents);
 
 module.exports = router;

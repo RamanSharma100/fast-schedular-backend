@@ -5,6 +5,9 @@
   "main": "server.js",
   "author": "Root to Top team",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
   "dependencies": {
     "@google-cloud/local-auth": "2.1.0",
     "axios": "^0.27.2",
@@ -18,6 +21,8 @@
     "googleapis": "105",
     "helmet": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "momentjs": "^2.0.0",
     "mongoose": "^6.5.4",
     "nodemailer": "^6.7.8"
   },

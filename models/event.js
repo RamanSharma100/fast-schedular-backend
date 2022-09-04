@@ -17,7 +17,6 @@ const eventSchema = new Schema(
     },
     eventDescription: {
       type: String,
-      required: true,
     },
     eventDates: {
       type: [String],
@@ -28,7 +27,7 @@ const eventSchema = new Schema(
       default: [],
     },
     emptySlots: {
-      type: [String],
+      type: [],
       default: [],
     },
     eventLocationType: {
@@ -41,11 +40,12 @@ const eventSchema = new Schema(
       type: String,
       default: "",
     },
-    eventLink: {
+    eventLocationLink: {
       type: String,
     },
     dateRange: {
       type: [String],
+      default: [],
     },
     duration: {
       type: String,
